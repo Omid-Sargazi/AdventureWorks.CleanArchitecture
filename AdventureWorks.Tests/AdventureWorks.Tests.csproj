@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AdventureWorks.Application\AdventureWorks.Application.csproj" />
     <ProjectReference Include="..\AdventureWorks.Domain\AdventureWorks.Domain.csproj" />
+    <ProjectReference Include="..\AdventureWorks.Infrastructure\AdventureWorks.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
