@@ -9,6 +9,6 @@ namespace AdventureWorks.Domain.Entities
         public decimal ListPrice { get; set; }
         public int? ProductSubcategoryID { get; set; }
         // Navigation
-         public ProductCategory? ProductSubcategory { get; set; }
+         public ProductSubcategory? ProductSubcategory { get; set; }
     }
 }
