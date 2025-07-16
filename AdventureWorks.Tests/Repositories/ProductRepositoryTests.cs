@@ -1,5 +1,8 @@
 using AdventureWorks.Domain.Entities;
 using AdventureWorks.Infrastructure.Persistence;
+using AdventureWorks.Infrastructure.Repositories;
+using Azure;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorks.Tests.Repositories
@@ -47,6 +50,18 @@ namespace AdventureWorks.Tests.Repositories
 
 
         [Fact]
+        public async Task GetAllWithCategoryAsync_ShouldReturnProductWithCategoryInfo()
+        {
+            var context = GetInMemoryDbContext();
+            var repository = new ProductRepository(context);
+
+            var result = await repository.GetAllWithCategoryAsync();
+
+            result.Should().NotBeNullOrEmpty();
+            result[0].Name.Should().Be("Trail Bike");
+            result[0].ProductSubcategory?.Name.Should().Be("Mountain Bikes");
+            result[0].ProductSubcategory?.ProductCategory?.Name.Should().Be("Bikes");
+        }
         
     }
 }
