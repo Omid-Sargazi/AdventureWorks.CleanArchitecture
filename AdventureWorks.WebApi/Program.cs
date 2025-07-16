@@ -13,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddMediatR(cfg =>
-cfg.RegisterServicesFromAssemblies(typeof(GetAllProductsQueryHandler).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(GetAllProductsQueryHandler).Assembly));
 
 
 builder.Services.AddControllers();
