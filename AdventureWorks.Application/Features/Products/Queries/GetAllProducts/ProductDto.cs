@@ -6,6 +6,6 @@ namespace AdventureWorks.Application.Features.Products.Queries.GetAllProducts
         public string Name { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
         public string Subcategory { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public decimal ListPrice { get; set; }
     }
 }
