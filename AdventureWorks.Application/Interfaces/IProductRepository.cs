@@ -5,5 +5,6 @@ namespace AdventureWorks.Application.Interfaces
     public interface IProductRepository
     {
         Task<List<Product>> GetAllWithCategoryAsync();
+        Task<List<Product>> GetUnsoldProductsAsync();
     }
 }

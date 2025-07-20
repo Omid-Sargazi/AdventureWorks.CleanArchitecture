@@ -20,5 +20,13 @@ namespace AdventureWorks.Infrastructure.Repositories
             .ThenInclude(sc => sc.ProductCategory)
             .ToListAsync();
         }
+
+        public async Task<List<Product>> GetUnsoldProductsAsync()
+        {
+            return await _context.Products
+            .Include(p => p.ProductSubcategory)
+            .ThenInclude(sc => sc.ProductCategory)
+            .Where(p => _context.SalesOrderDetails.Any(s => s.ProductID == p.ProductID)).ToListAsync();
+        }
     }
 }

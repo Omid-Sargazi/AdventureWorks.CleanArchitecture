@@ -1,6 +1,7 @@
 using AdventureWorks.Application.Features.Products.Queries.FilterProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetProductsWithCategoryOnly;
+using AdventureWorks.Application.Features.Products.Queries.GetUnsoldProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,5 +42,12 @@ namespace AdventureWorks.WebApi.Controllers
             });
             return Ok(result);
         }
+
+        [HttpGet("unsold")]
+        public async Task<IActionResult> GetUnsoldProducts()
+        {
+            var result = await _mediator.Send(new GetUnsoldProductsQuery());
+            return Ok(result);
+        } 
     }
 }
