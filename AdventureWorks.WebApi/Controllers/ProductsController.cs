@@ -1,6 +1,7 @@
 using AdventureWorks.Application.Features.Products.Queries.FilterProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetProductsWithCategoryOnly;
+using AdventureWorks.Application.Features.Products.Queries.GetTopSellingProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetUnsoldProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,15 @@ namespace AdventureWorks.WebApi.Controllers
         {
             var result = await _mediator.Send(new GetUnsoldProductsQuery());
             return Ok(result);
-        } 
+        }
+
+        [HttpGet("top-selling")]
+        public async Task<IActionResult> GetTopSellingProducts([FromQuery] int top = 10)
+        {
+            var result = await _mediator.Send(new GetTopSellingProductsQuery { TopN = top });
+            return Ok(result);
+        }
+
+
     }
 }
