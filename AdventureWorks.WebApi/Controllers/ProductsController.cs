@@ -1,3 +1,4 @@
+using AdventureWorks.Application.Features.Products.Queries.FilterProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetProductsWithCategoryOnly;
 using MediatR;
@@ -21,10 +22,23 @@ namespace AdventureWorks.WebApi.Controllers
             var result = await _mediator.Send(new GetAllProductsQuery());
             return Ok(result);
         }
+
+
         [HttpGet("with-category")]
         public async Task<IActionResult> GetOnlyWithCategory()
         {
             var result = await _mediator.Send(new GetProductsWithCategoryOnlyQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> Filter([FromQuery] decimal minPrice, [FromQuery] string? category)
+        {
+            var result = await _mediator.Send(new FilterProductsQuery
+            {
+                MinPrice = minPrice,
+                Category = category
+            });
             return Ok(result);
         }
     }
