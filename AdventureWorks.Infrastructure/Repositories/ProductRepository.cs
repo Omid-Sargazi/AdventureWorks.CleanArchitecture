@@ -15,6 +15,7 @@ namespace AdventureWorks.Infrastructure.Repositories
         public async Task<List<Product>> GetAllWithCategoryAsync()
         {
             return await _context.Products
+            .Where(p=>p.ProductSubcategoryID !=null)
             .Include(p => p.ProductSubcategory)
             .ThenInclude(sc => sc.ProductCategory)
             .ToListAsync();
