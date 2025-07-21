@@ -1,8 +1,10 @@
 using AdventureWorks.Application.Features.Products.Queries.GetMonthlySales;
+using AdventureWorks.Application.Features.Products.Queries.GetTopCustomers;
 using AdventureWorks.Application.Features.Products.Queries.GetTopSellingProducts;
 using AdventureWorks.Application.Interfaces;
 using AdventureWorks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AdventureWorks.Infrastructure.Repositories
 {
@@ -34,6 +36,40 @@ namespace AdventureWorks.Infrastructure.Repositories
                 .ThenBy(g => g.Month)
                 .ToListAsync();
         }
+
+       
+
+        public async Task<List<TopCustomerDto>> GetTopCustomersAsync(int topN)
+        {
+            var result = await _context.SalesOrderHeaders
+         .Where(h => h.Customer != null && h.Customer.Person != null)
+         .SelectMany(h => h.OrderDetails.Select(d => new
+         {
+             h.Customer.CustomerID,
+             h.Customer.Person.FirstName,
+             h.Customer.Person.LastName,
+             d.LineTotal
+         }))
+         .GroupBy(x => new
+         {
+             x.CustomerID,
+             x.FirstName,
+             x.LastName
+         })
+         .Select(g => new TopCustomerDto
+         {
+             CustomerID = g.Key.CustomerID,
+             FullName = g.Key.FirstName + " " + g.Key.LastName,
+             TotalSales = g.Sum(x => x.LineTotal)
+         })
+         .OrderByDescending(x => x.TotalSales)
+         .Take(topN)
+         .ToListAsync();
+
+            return result;
+        }
+
+      
 
         public async Task<List<TopSellingProductDto>> GetTopSellingProductsAsync(int topN)
         {

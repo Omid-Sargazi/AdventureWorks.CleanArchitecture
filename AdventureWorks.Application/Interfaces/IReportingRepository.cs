@@ -1,4 +1,5 @@
 using AdventureWorks.Application.Features.Products.Queries.GetMonthlySales;
+using AdventureWorks.Application.Features.Products.Queries.GetTopCustomers;
 using AdventureWorks.Application.Features.Products.Queries.GetTopSellingProducts;
 
 namespace AdventureWorks.Application.Interfaces
@@ -7,5 +8,6 @@ namespace AdventureWorks.Application.Interfaces
     {
         Task<List<TopSellingProductDto>> GetTopSellingProductsAsync(int topN);
         Task<List<MonthlySalesDto>> GetMonthlySalesAsync(int? year);
+        Task<List<TopCustomerDto>> GetTopCustomersAsync(int topN);
     }
 }

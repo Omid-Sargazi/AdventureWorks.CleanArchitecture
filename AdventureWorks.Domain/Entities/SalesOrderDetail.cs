@@ -6,6 +6,8 @@ namespace AdventureWorks.Domain.Entities
         public int SalesOrderDetailID { get; set; }
         public int ProductID { get; set; }
         public short OrderQty { get; set; }
+        public decimal LineTotal { get; set; }
+
         public Product? Product { get; set; }
         public SalesOrderHeader? SalesOrderHeader { get; set; }
     }
