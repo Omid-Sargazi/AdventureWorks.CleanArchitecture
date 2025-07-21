@@ -1,6 +1,6 @@
+using AdventureWorks.Application.Features.Orders.Queries.GetTopOrders;
 using AdventureWorks.Application.Features.Products.Queries.GetMonthlySales;
 using AdventureWorks.Application.Features.Products.Queries.GetTopCustomers;
-using AdventureWorks.Application.Features.Products.Queries.GetTopOrders;
 using AdventureWorks.Application.Features.Products.Queries.GetTopSellingProducts;
 using AdventureWorks.Application.Interfaces;
 using AdventureWorks.Infrastructure.Persistence;
@@ -72,7 +72,7 @@ namespace AdventureWorks.Infrastructure.Repositories
 
         public async Task<List<TopOrderDto>> GetTopOrdersAsync(int topN)
         {
-            var result = await _context.SalesOrderHeaders
+             var result = await _context.SalesOrderHeaders
             .Include(o => o.Customer)
             .ThenInclude(c => c.Person)
             .Include(o => o.OrderDetails)
@@ -104,5 +104,7 @@ namespace AdventureWorks.Infrastructure.Repositories
             .Take(topN)
             .ToListAsync();
         }
+
+       
     }
 }

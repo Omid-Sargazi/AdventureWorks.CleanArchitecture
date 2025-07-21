@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace AdventureWorks.Application.Features.Products.Queries.GetTopOrders
+namespace AdventureWorks.Application.Features.Orders.Queries.GetTopOrders
 {
     public class GetTopOrdersQuery : IRequest<List<TopOrderDto>>
     {

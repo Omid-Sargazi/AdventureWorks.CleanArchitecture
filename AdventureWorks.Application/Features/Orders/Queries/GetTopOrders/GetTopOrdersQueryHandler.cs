@@ -1,7 +1,7 @@
 using AdventureWorks.Application.Interfaces;
 using MediatR;
 
-namespace AdventureWorks.Application.Features.Products.Queries.GetTopOrders
+namespace AdventureWorks.Application.Features.Orders.Queries.GetTopOrders
 {
     public class GetTopOrdersQueryHandler : IRequestHandler<GetTopOrdersQuery, List<TopOrderDto>>
     {
