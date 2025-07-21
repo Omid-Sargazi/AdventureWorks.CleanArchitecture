@@ -10,6 +10,11 @@ namespace AdventureWorks.Infrastructure.Persistence.Configurations
         {
             builder.ToTable("SalesOrderHeader", "Sales");
             builder.HasKey(x => x.SalesOrderID);
+
+
+            builder.HasOne(o=>o.Customer)
+                .WithMany(c=>c.Orders)
+                .HasForeignKey(o => o.CustomerID);
         }
     }
 }

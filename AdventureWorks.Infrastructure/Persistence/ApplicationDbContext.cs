@@ -12,6 +12,9 @@ namespace AdventureWorks.Infrastructure.Persistence
         public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
         public DbSet<SalesOrderDetail> SalesOrderDetails => Set<SalesOrderDetail>();
         public DbSet<SalesOrderHeader> SalesOrderHeaders => Set<SalesOrderHeader>();
+        public DbSet<Customer> Customers => Set<Customer>();
+        public DbSet<Person> Persons => Set<Person>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

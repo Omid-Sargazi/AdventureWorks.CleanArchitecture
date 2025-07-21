@@ -12,6 +12,6 @@ namespace AdventureWorks.Domain.Entities
         public int? PersonID { get; set; }//FK 
 
         public Person? Person { get; set; }
-        public ICollection<SalesOrderHeader> Orders { get; set; }
+        public ICollection<SalesOrderHeader> Orders { get; set; } = new List<SalesOrderHeader>();   
     }
 }
