@@ -9,6 +9,6 @@ namespace AdventureWorks.Application.Features.Products.Queries.GetTopCustomers
 {
     public class GetTopCustomersQuery : IRequest<List<TopCustomerDto>>
     {
-        public int? TopN { get; set; } = 10;
+        public int TopN { get; set; } = 10;
     }
 }
