@@ -1,5 +1,6 @@
 using AdventureWorks.Application.Features.Products.Queries.FilterProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
+using AdventureWorks.Application.Features.Products.Queries.GetMonthlySales;
 using AdventureWorks.Application.Features.Products.Queries.GetProductsWithCategoryOnly;
 using AdventureWorks.Application.Features.Products.Queries.GetTopSellingProducts;
 using AdventureWorks.Application.Features.Products.Queries.GetUnsoldProducts;
@@ -55,6 +56,13 @@ namespace AdventureWorks.WebApi.Controllers
         public async Task<IActionResult> GetTopSellingProducts([FromQuery] int top = 10)
         {
             var result = await _mediator.Send(new GetTopSellingProductsQuery { TopN = top });
+            return Ok(result);
+        }
+
+        [HttpGet("/api/reports/monthly-sales")]
+        public async Task<IActionResult> GetMonthlySales([FromQuery] int? year)
+        {
+            var result = await _mediator.Send(new GetMonthlySalesQuery { Year = year });
             return Ok(result);
         }
 

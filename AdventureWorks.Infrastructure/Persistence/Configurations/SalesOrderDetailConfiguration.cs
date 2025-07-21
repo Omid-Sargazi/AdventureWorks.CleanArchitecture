@@ -9,14 +9,14 @@ namespace AdventureWorks.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<SalesOrderDetail> builder)
         {
             builder.ToTable("SalesOrderDetail", "Sales");
-            builder.HasKey(x => new { x.SaleOrderID, x.SalesOrderDetailID });
+            builder.HasKey(x => new { x.SalesOrderID, x.SalesOrderDetailID });
             builder.HasOne(d => d.Product)
             .WithMany()
             
             .HasForeignKey(d => d.ProductID);
             builder.HasOne(d => d.SalesOrderHeader)
             .WithMany(h => h.OrderDetails)
-            .HasForeignKey(d => d.SaleOrderID);
+            .HasForeignKey(d => d.SalesOrderID);
         }
     }
 }

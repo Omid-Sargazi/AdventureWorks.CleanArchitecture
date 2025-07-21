@@ -2,7 +2,7 @@ namespace AdventureWorks.Domain.Entities
 {
     public class SalesOrderDetail
     {
-        public int SaleOrderID { get; set; }
+        public int SalesOrderID { get; set; }
         public int SalesOrderDetailID { get; set; }
         public int ProductID { get; set; }
         public short OrderQty { get; set; }
