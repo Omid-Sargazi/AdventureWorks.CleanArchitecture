@@ -17,6 +17,7 @@ namespace AdventureWorks.WebApi.Controllers
         [HttpGet("top-orders")]
         public async Task<ActionResult<List<TopOrderDto>>> GetTopOrders([FromQuery] int topN = 5)
         {
+            throw new Exception("Test Exception");
             var result = await _mediator.Send(new GetTopOrdersQuery { TopN = topN });
             return Ok(result);
         }

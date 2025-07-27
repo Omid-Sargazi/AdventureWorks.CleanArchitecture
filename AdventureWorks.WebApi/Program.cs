@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestTimingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
