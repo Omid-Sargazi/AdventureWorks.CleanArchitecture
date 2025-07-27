@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using AdventureWorks.Application.Exceptions;
 
 namespace AdventureWorks.WebApi.Middleware
 {
@@ -23,18 +24,29 @@ namespace AdventureWorks.WebApi.Middleware
             {
 
                 _logger.LogError(ex, "An unhandled exception occurred while processing the request");
-                context.Response.ContentType = ("application/json");
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                var resposne = context.Response; 
+                resposne.ContentType = ("application/json");
+
+                var statusCode = (int)HttpStatusCode.InternalServerError;
+                string message = "Internal Server Error";
+
+                if (ex is AppException appEx)
+                {
+                    statusCode = appEx.StatusCode;
+                    message = appEx.Message;
+                }
+
+                resposne.StatusCode = statusCode;
 
                 var errorResponse = new
                 {
-                    statusCode = context.Response.StatusCode,
-                    message = "Unexpected error occurred. Please contact support.",
-                    detail = ex.Message,
+                    statusCode,
+                    message,
+                    detail = ex is AppException ? null : ex.Message
                 };
 
-                var json = JsonSerializer.Serialize(errorResponse);
-                await context.Response.WriteAsync(json);
+                await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
             }
         }
     }
