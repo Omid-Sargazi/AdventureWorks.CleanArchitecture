@@ -2,6 +2,7 @@ using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Interfaces;
 using AdventureWorks.Infrastructure.Persistence;
 using AdventureWorks.Infrastructure.Repositories;
+using AdventureWorks.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+app.UseMiddleware<RequestTimingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
