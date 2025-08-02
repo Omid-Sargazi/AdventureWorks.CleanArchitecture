@@ -1,8 +1,10 @@
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Interfaces;
+using AdventureWorks.Application.Settings;
 using AdventureWorks.Domain.Entities;
 using AdventureWorks.Infrastructure.Persistence;
 using AdventureWorks.Infrastructure.Repositories;
+using AdventureWorks.Infrastructure.Services;
 using AdventureWorks.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDbContext<AuthinticationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
+
+builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
