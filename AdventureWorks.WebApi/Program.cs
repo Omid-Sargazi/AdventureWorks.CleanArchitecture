@@ -1,5 +1,6 @@
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Interfaces;
+using AdventureWorks.Domain.Entities;
 using AdventureWorks.Infrastructure.Persistence;
 using AdventureWorks.Infrastructure.Repositories;
 using AdventureWorks.WebApi.Middleware;
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddDbContext<AuthDbContext>(options =>
+builder.Services.AddDbContext<AuthinticationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
 
 
@@ -29,6 +30,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var authDb = scope.ServiceProvider.GetRequiredService<AuthinticationDbContext>();
+    
+    if (!authDb.Users.Any())
+    {
+        authDb.Users.Add(new AppUser { Username = "admin", Password = "1234", Role = "Admin" });
+        authDb.SaveChanges();
+    }
+}
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<RequestTimingMiddleware>();
 app.UseSwagger();

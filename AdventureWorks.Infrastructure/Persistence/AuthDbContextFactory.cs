@@ -1,15 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace AdventureWorks.Infrastructure.Persistence
 {
-    public class AuthDbContextFactory : IDesignTimeDbContextFactory<AuthDbContext>
+    public class AuthinticationDbContextFactory : IDesignTimeDbContextFactory<AuthinticationDbContext>
     {
-        public AuthDbContext CreateDbContext(string[] args)
+        public AuthinticationDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AuthDbContext>();
+           var optionsBuilder = new DbContextOptionsBuilder<AuthinticationDbContext>();
             optionsBuilder.UseSqlServer("Server=.;Database=AdventureWorksAuthDb;User Id=sa;Password=15935755Omid$@;Encrypt=False;");
-            return new AuthDbContext(optionsBuilder.Options);
+
+            return new AuthinticationDbContext(optionsBuilder.Options);
+
+     
         }
     }
 }

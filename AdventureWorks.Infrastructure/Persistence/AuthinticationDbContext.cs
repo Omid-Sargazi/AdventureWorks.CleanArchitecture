@@ -3,9 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorks.Infrastructure.Persistence
 {
-    public class AuthDbContext : DbContext
+    public class AuthinticationDbContext : DbContext
     {
-        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
+        public AuthinticationDbContext(DbContextOptions<AuthinticationDbContext> options) : base(options) { }
         public DbSet<AppUser> Users => Set<AppUser>();
+
+
+       
     }
 }

@@ -3,19 +3,16 @@ using AdventureWorks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace AdventureWorks.Infrastructure.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
-    [Migration("20250802094027_InitAuthDb")]
-    partial class InitAuthDb
+    [DbContext(typeof(AuthinticationDbContext))]
+    partial class AuthinticationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
