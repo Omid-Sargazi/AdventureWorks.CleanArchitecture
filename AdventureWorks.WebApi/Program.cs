@@ -1,3 +1,4 @@
+using System.Text;
 using AdventureWorks.Application.Features.Products.Queries.GetAllProducts;
 using AdventureWorks.Application.Interfaces;
 using AdventureWorks.Application.Settings;
@@ -6,7 +7,9 @@ using AdventureWorks.Infrastructure.Persistence;
 using AdventureWorks.Infrastructure.Repositories;
 using AdventureWorks.Infrastructure.Services;
 using AdventureWorks.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,30 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("AuthDb")));
 builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+var jwtSettings = builder.Configuration.GetSection("JWTSettings").Get<JWTSettings>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+    };
+});
 
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -53,5 +80,7 @@ app.UseMiddleware<RequestTimingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
